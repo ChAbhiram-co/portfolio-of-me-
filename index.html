@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8fafc, #e8edf0);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Taskbar with moving text */
+        .taskbar {
+            background: linear-gradient(to right, #ff7eb3, #ff758c);
+            color: white;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .moving-text {
+            white-space: nowrap;
+            position: absolute;
+            animation: moveText 15s linear infinite;
+            font-size: 1.2rem;
+        }
+
+        @keyframes moveText {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Image section */
+        .myimage {
+            margin: 20px auto;
+            height: 350px;
+            width: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .abhiimg {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        /* Career section */
+        .myCareer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .career {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* Education section with icons and a more dynamic design */
+        .education {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            padding: 30px;
+            margin: 20px;
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .education h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .edu-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .edu-icon {
+            font-size: 2rem;
+            margin-right: 20px;
+            color: white;
+        }
+
+        .edu-details p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Skills Section Styling */
+        .skills-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px;
+            gap: 20px;
+        }
+
+        .skill-card {
+            width: 150px;
+            height: 150px;
+            perspective: 1000px;
+        }
+
+        .skill-card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .skill-card:hover .skill-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .skill-front, .skill-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-front {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .skill-back {
+            background: #f8fafc;
+            color: #333;
+            font-size: 1rem;
+            transform: rotateY(180deg);
+            text-align: center;
+        }
+
+        /* Contact Me Button */
+        .contact-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ff7eb3;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .contact-btn:hover {
+            background: #ff758c;
+        }
+
+        /* Contact Popup */
+        #contact-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        #contact-popup h3 {
+            margin-bottom: 10px;
+        }
+
+        #contact-popup p {
+            margin: 5px 0;
+        }
+
+        .btn-close {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #ff758c;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .btn-close:hover {
+            background: #ff7eb3;
+        }
+
+        /* Overlay */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Resume Button */
+        .resume-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ff7eb3;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .resume-btn:hover {
+            background: #ff758c;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Moving text taskbar -->
+    <div class="taskbar">
+        <p class="moving-text">✨ Welcome to my colorful portfolio! 🚀</p>
+    </div>
+
+    <!-- Image section -->
+    <div class="myimage">
+        <img class="abhiimg" src="my image.jpg" alt="Your Image">
+    </div>
+
+    <!-- Career section -->
+    <div class="myCareer">
+        <div class="career">
+            <p>Skilled in analytical thinking and problem-solving, passionate about new technologies.
+            Excellent team player with strong communication skills. Adaptable and committed to
+            continuous learning. Eager to contribute innovative solutions and drive success in a
+            dynamic organization.</p>
+        </div>
+    </div>
+
+    <!-- Education section -->
+    <div class="education">
+        <h3>Education</h3>
+        <div class="edu-item">
+            <div class="edu-icon">🎓</div>
+            <div class="edu-details">
+                <p><strong>MCA</strong><br>
+                DVR & Dr.HS MIC College of Technology, Kanchikacherla<br>
+                University: JNTUK<br>
+                Period: 2022 – 2024</p>
+            </div>
+        </div>
+        <div class="edu-item">
+            <div class="edu-icon">📚</div>
+            <div class="edu-details">
+                <p><strong>B.SC (Computers)</strong><br>
+                AVR Degree College, Avanigadda<br>
+                University: Krishna University<br>
+                Period: 2019 – 2022</p>
+            </div>
+        </div>
+        <div class="edu-item">
+            <div class="edu-icon">🧑‍🎓</div>
+            <div class="edu-details">
+                <p><strong>Intermediate, MPC</strong><br>
+                Narayana Junior College, Repalle<br>
+                Period: 2017 – 2019</p>
+            </div>
+        </div>
+        <div class="edu-item">
+            <div class="edu-icon">🏫</div>
+            <div class="edu-details">
+                <p><strong>SSC</strong><br>
+                Raghava E.M High School, Repalle<br>
+                Period: 2016 – 2017</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills Section -->
+    <div class="skills-container">
+        <div class="skill-card">
+            <div class="skill-card-inner">
+                <div class="skill-front">Java</div>
+                <div class="skill-back">Object-Oriented Programming</div>
+            </div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-card-inner">
+                <div class="skill-front">HTML</div>
+                <div class="skill-back">Web Development</div>
+            </div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-card-inner">
+                <div class="skill-front">CSS</div>
+                <div class="skill-back">Styling & Layout</div>
+            </div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-card-inner">
+                <div class="skill-front">PostgreSQL</div>
+                <div class="skill-back">Database Management</div>
+            </div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-card-inner">
+                <div class="skill-front">MS Office</div>
+                <div class="skill-back">Documentation & Data Analysis</div>
+            </div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-card-inner">
+                <div class="skill-front">UI/UX Design</div>
+                <div class="skill-back">Wireframing and Prototyping</div>
+            </div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-card-inner">
+                <div class="skill-front">Python</div>
+                <div class="skill-back">AI & ML Development</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Me Button -->
+    <a href="javascript:void(0)" class="contact-btn" onclick="showContactForm()">Contact Me</a>
+
+    <!-- Contact Popup -->
+    <div id="contact-popup">
+        <h3>Contact Me</h3>
+        <p>Email: abhiramchaana418@gmail.com</p>
+        <p>Phone: +91 7989000078</p>
+        <button class="btn-close" onclick="closeContactForm()">Close</button>
+    </div>
+    
+    <!-- Overlay -->
+    <div id="overlay" onclick="closeContactForm()"></div>
+
+    <!-- Download Resume Button -->
+    <a href="resume.pdf" class="resume-btn" download>Download Resume</a>
+
+    <script>
+        function showContactForm() {
+            document.getElementById("contact-popup").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function closeContactForm() {
+            document.getElementById("contact-popup").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
